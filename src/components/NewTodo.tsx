@@ -2,6 +2,7 @@ import { useState} from 'react'
 import { addTodo } from '../redux/todoSlice'
 import { useAppDispatch } from '../hooks/useAppDispatch'
 import TodoButton from './TodoButton';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NewTodo = ({
   todoOpen,
@@ -14,7 +15,6 @@ const NewTodo = ({
     title: "",
     description: "",
   });
-
   const dispatch = useAppDispatch();
 
   const addNewTodo = () => {
@@ -25,54 +25,101 @@ const NewTodo = ({
       description: "",
     });
   };
+
+  const handleClose = () => {
+    setTodoOpen(false);
+  };
+
+  const modalVariants = {
+    hidden: {
+      opacity: 0,
+      y: "-100%",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: "-100%",
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+      },
+    }
+  }
   return (
-    <>
+    <AnimatePresence>
       {todoOpen && (
         <div
+          onClick={handleClose}
           style={{
-            display: "flex",
-            flexDirection: "column",
-            border: "1px solid black",
-            borderRadius: "5px",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 1,
           }}
         >
-          <div
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              position: 'relative',
+              flexDirection: "column",
+              border: "1px solid black",
+              borderRadius: "5px",
+              maxWidth: "500px",
+              margin: "2rem auto",
+              backgroundColor: "white",
+              padding: "10px",
+              gap: 10
             }}
+            variants={modalVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
           >
-            <h2>{todoInput.title}</h2>
-            <button onClick={() => setTodoOpen(false)}>X</button>
-          </div>
-          <input
-            type="text"
-            placeholder="Enter Todo Title"
-            value={todoInput.title}
-            onChange={(e) =>
-              setTodoInput({ ...todoInput, title: e.target.value })
-            }
-          />
-          <label>Enter Todo Description:</label>
-          <textarea
-            value={todoInput.description}
-            onChange={(e) =>
-              setTodoInput({ ...todoInput, description: e.target.value })
-            }
-          />
-          <TodoButton title="Add Todo" onClick={addNewTodo} />
-          {/* <button onClick={addNewTodo}>Add Todo</button> */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <h2>{todoInput.title}</h2>
+              <button onClick={handleClose}>X</button>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter Todo Title"
+              value={todoInput.title}
+              onChange={(e) =>
+                setTodoInput({ ...todoInput, title: e.target.value })
+              }
+            />
+            <label>Enter Todo Description:</label>
+            <textarea
+              value={todoInput.description}
+              rows={5}
+              onChange={(e) =>
+                setTodoInput({ ...todoInput, description: e.target.value })
+              }
+            />
+            <TodoButton title="Add Todo" onClick={addNewTodo} />
+          </motion.div>
         </div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
-// const newTodoStyle = {
-//   display: 'flex',
-//   flexDirection: 'column',
-//   border: '1px solid black',
-//   borderRadius: '15px'
-// }
 export default NewTodo
