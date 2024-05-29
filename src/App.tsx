@@ -8,7 +8,7 @@ function App() {
     <>
       <TodoContainer>
         <TodoHeader />
-        <div style={{ padding: '10px'}}>
+        <div>
           <TodoList />
         </div>
       </TodoContainer>

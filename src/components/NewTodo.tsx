@@ -101,6 +101,7 @@ const NewTodo = ({
             <input
               type="text"
               placeholder="Enter Todo Title"
+              autoFocus
               value={todoInput.title}
               onChange={(e) =>
                 setTodoInput({ ...todoInput, title: e.target.value })

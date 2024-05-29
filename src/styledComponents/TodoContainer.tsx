@@ -1,7 +1,7 @@
 import { styled, Paper } from "@mui/material"
 
 const StyledContainer = styled(Paper)`
-  border: 2px solid black;
+  border: 2px solid #ddd;
   width: 500px;
   border-radius: 10px;
 `;
