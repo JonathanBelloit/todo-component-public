@@ -29,20 +29,21 @@ const TodoList = () => {
     <div>
       <div>
         {todos.map((todo) => (
-        <div key={todo.id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5}}>
+        <div key={todo.id} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
           <h2>{todo.title}</h2>
-          <FaInfoCircle />
+          <div style={{ display: 'flex', gap: 5, alignItems: 'center'}}>
+            <FaInfoCircle color='#DBC53A'/>
             <MdDelete
-              color="red"
+              color="#E06546"
               fontSize="1.5em"
               onClick={() => handleDeleteTodo(todo.id ?? "")}
             />
-
+          </div>
           {/* <p>{todo.description}</p> */}
         </div>
       ))}
       </div>
-      <TodoButton title='Add Todo' onClick={() => setNewTodoOpen(true)} />
+      { !newTodoOpen && <TodoButton title='Add Todo' onClick={() => setNewTodoOpen(true)} />}
       <NewTodo todoOpen={newTodoOpen} setTodoOpen={setNewTodoOpen} />
     </div>
   )
