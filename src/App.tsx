@@ -1,13 +1,16 @@
 // import { todoStyle } from "./styles/todoStyle"
 import TodoContainer from "./styledComponents/TodoContainer"
 import TodoList from "./components/TodoList"
+import TodoHeader from "./components/TodoHeader"
 function App() {
   
   return (
     <>
       <TodoContainer>
-        <h1>Todo List</h1>
-        <TodoList />
+        <TodoHeader />
+        <div style={{ padding: '10px'}}>
+          <TodoList />
+        </div>
       </TodoContainer>
     </>
   )
