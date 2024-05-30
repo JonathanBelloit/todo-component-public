@@ -9,11 +9,13 @@ import { MdDelete } from "react-icons/md";
 // local components
 import TodoButton from "./TodoButton";
 import NewTodo from "./NewTodo";
+import TodoModal from "./TodoModal";
+import { Todo } from './interface'
 
 const TodoList = () => {
-  // const todos = useSelector(getTodos)
-  // console.log(todos)
   const [newTodoOpen, setNewTodoOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [todoModal, setTodoModal] = useState<Todo>({} as Todo);
 
   const handleDeleteTodo = (id: string) => {
     dispatch(deleteTodo(id));
@@ -25,13 +27,22 @@ const TodoList = () => {
     dispatch(getTodos());
   }, [dispatch]);
 
+  const handleModalOpen = ({ todo }: { todo: Todo }) => {
+    setTodoModal(todo);
+    setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setTodoModal({} as Todo);
+    setModalOpen(false);
+  };
+
   const containerStyle = {
     maxWidth: "500px",
-    // margin: "0 2rem auto",
     padding: "1rem 2rem",
     backgroundColor: "#7493A2",
-    borderBottomLeftRadius: '30px',
-    borderBottomRightRadius: '30px',
+    borderBottomLeftRadius: "30px",
+    borderBottomRightRadius: "30px",
   };
 
   const todoItemStyle = {
@@ -59,12 +70,23 @@ const TodoList = () => {
           <div
             key={todo.id}
             style={todoItemStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = todoItemHoverStyle.backgroundColor, e.currentTarget.style.transform = todoItemHoverStyle.transform)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = todoItemStyle.backgroundColor, e.currentTarget.style.transform = todoItemStyle.transform)}
+            onMouseEnter={(e) => (
+              (e.currentTarget.style.backgroundColor =
+                todoItemHoverStyle.backgroundColor),
+              (e.currentTarget.style.transform = todoItemHoverStyle.transform)
+            )}
+            onMouseLeave={(e) => (
+              (e.currentTarget.style.backgroundColor =
+                todoItemStyle.backgroundColor),
+              (e.currentTarget.style.transform = todoItemStyle.transform)
+            )}
           >
             <h2>{todo.title}</h2>
             <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-              <FaInfoCircle color="#DBC53A" />
+              <FaInfoCircle
+                color="#DBC53A"
+                onClick={() => handleModalOpen({ todo })}
+              />
               <MdDelete
                 color="#E06546"
                 fontSize="1.5em"
@@ -78,6 +100,11 @@ const TodoList = () => {
         <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
       )}
       <NewTodo todoOpen={newTodoOpen} setTodoOpen={setNewTodoOpen} />
+      <TodoModal
+        todo={todoModal}
+        modalOpen={modalOpen}
+        handleModalClose={handleModalClose}
+      />
     </div>
   );
 };
