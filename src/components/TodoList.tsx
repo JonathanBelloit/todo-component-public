@@ -29,7 +29,9 @@ const TodoList = () => {
     maxWidth: "500px",
     // margin: "0 2rem auto",
     padding: "1rem 2rem",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#7493A2",
+    borderBottomLeftRadius: '30px',
+    borderBottomRightRadius: '30px',
   };
 
   const todoItemStyle = {
