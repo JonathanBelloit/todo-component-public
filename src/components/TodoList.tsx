@@ -42,10 +42,12 @@ const TodoList = () => {
     backgroundColor: "#fff",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
     transition: "background-color 0.3s",
+    transform: "scale(1)",
   };
 
   const todoItemHoverStyle = {
     backgroundColor: "#f1f1f1",
+    transform: "scale(1.05)",
   };
 
   return (
@@ -55,8 +57,8 @@ const TodoList = () => {
           <div
             key={todo.id}
             style={todoItemStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = todoItemHoverStyle.backgroundColor)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = todoItemStyle.backgroundColor)}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = todoItemHoverStyle.backgroundColor, e.currentTarget.style.transform = todoItemHoverStyle.transform)}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = todoItemStyle.backgroundColor, e.currentTarget.style.transform = todoItemStyle.transform)}
           >
             <h2>{todo.title}</h2>
             <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
