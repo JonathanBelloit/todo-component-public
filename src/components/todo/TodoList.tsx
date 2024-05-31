@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getTodos, deleteTodo } from "../redux/todoSlice";
-import { RootState } from "../redux/store";
-import { useAppDispatch } from "../hooks/useAppDispatch";
+import { getTodos, deleteTodo } from "../../redux/todoSlice";
+import { RootState } from "../../redux/store";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 //icons
 import { FaInfoCircle } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";

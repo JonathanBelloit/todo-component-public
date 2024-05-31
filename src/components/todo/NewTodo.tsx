@@ -1,6 +1,6 @@
 import { useState} from 'react'
-import { addTodo } from '../redux/todoSlice'
-import { useAppDispatch } from '../hooks/useAppDispatch'
+import { addTodo } from '../../redux/todoSlice'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TodoButton from './TodoButton';
 import { motion, AnimatePresence } from 'framer-motion';
 

@@ -8,7 +8,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
-import { Todo } from "../components/interface";
+import { Todo } from "../components/todo/interface";
 
 const todosCollectionRef = collection(db, "Todos");
 

@@ -1,7 +1,9 @@
 // import { todoStyle } from "./styles/todoStyle"
 import TodoContainer from "./styledComponents/TodoContainer"
-import TodoList from "./components/TodoList"
-import TodoHeader from "./components/TodoHeader"
+import TodoList from "./components/todo/TodoList"
+import TodoHeader from "./components/todo/TodoHeader"
+import WelcomeScreen from "./components/auth/WelcomeScreen"
+// import Login from "./components/auth/Login"
 function App() {
   
   return (
@@ -9,7 +11,9 @@ function App() {
       <TodoContainer>
         <TodoHeader />
         <div>
-          <TodoList />
+          {/* <TodoList /> */}
+          {/* <Login /> */}
+          <WelcomeScreen />
         </div>
       </TodoContainer>
     </>
