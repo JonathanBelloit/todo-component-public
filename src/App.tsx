@@ -3,17 +3,18 @@ import TodoContainer from "./styledComponents/TodoContainer"
 import TodoList from "./components/todo/TodoList"
 import TodoHeader from "./components/todo/TodoHeader"
 import WelcomeScreen from "./components/auth/WelcomeScreen"
-// import Login from "./components/auth/Login"
+import useAuth from "./hooks/useAuth"
 function App() {
-  
+  const { user, loading } = useAuth()
   return (
     <>
       <TodoContainer>
         <TodoHeader />
         <div>
+          { loading && <h1>Loading...</h1>}
           {/* <TodoList /> */}
-          {/* <Login /> */}
-          <WelcomeScreen />
+          {!user && <WelcomeScreen />}
+          {user && <TodoList />}
         </div>
       </TodoContainer>
     </>

@@ -1,10 +1,28 @@
 import { useState } from "react";
 import StyledInput from "../../styledComponents/TodoInput";
 import { Button } from "@mui/material";
+import { auth, createUserWithEmailAndPassword } from "../../config/firebase";
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = async () => {
+    if (email === "" || password === "" || confirmPassword === "") {
+      alert("Please fill in all fields");
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+    }
+    if (password === confirmPassword) {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
   return (
     <div style={containerStyle}>
@@ -19,14 +37,16 @@ const SignUp = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         fullWidth
+        type="password"
       />
       <StyledInput
         placeholder=" Retype Password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         fullWidth
+        type="password"
       />
-      <Button variant="contained" color="primary" sx={{ paddingX: 10 }}>
+      <Button onClick={handleSignUp} variant="contained" color="primary" sx={{ paddingX: 10 }}>
         submit
       </Button>
     </div>

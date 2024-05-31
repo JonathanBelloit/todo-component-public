@@ -1,9 +1,11 @@
+import { PiSignOut } from "react-icons/pi";
+import { signOut, auth } from '../../config/firebase'
+
 const TodoHeader = () => {
   return (
     <div style={headerStyle}>
-      <div style={{ display: 'flex', alignItems: 'center'}}>
-        <h1 style={{ textAlign: 'center' }}>Todo List</h1>
-      </div>
+      <h1 style={{ textAlign: 'center' }}>Todo List</h1>
+      <PiSignOut style={{ cursor: 'pointer', fontSize: '2.5rem' }} onClick={() => signOut(auth)} />
     </div>
   )
 }

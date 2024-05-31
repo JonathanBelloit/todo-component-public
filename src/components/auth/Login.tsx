@@ -1,10 +1,22 @@
 import { useState } from "react";
 import StyledInput from "../../styledComponents/TodoInput";
 import { Button } from "@mui/material";
+import { auth, signInWithEmailAndPassword } from "../../config/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      alert("Please fill in all fields");
+    }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div style={containerStyle}>
@@ -19,8 +31,9 @@ const Login = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         fullWidth
+        type="password"
       />
-      <Button variant="contained" color="primary" sx={{ paddingX: 10 }}>
+      <Button onClick={handleLogin} variant="contained" color="primary" sx={{ paddingX: 10 }}>
         submit
       </Button>
     </div>
