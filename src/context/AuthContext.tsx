@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const register = async (email: string, password: string) => {
     const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredentials.user;
-    await addDoc(collection(db, 'users'), {
+    await addDoc(collection(db, `users/${user.email}/userData`), {
       email: user.email,
       uid: user.uid,
       createdAt: new Date(),
