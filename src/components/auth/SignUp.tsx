@@ -1,12 +1,14 @@
 import { useState } from "react";
 import StyledInput from "../../styledComponents/TodoInput";
 import { Button } from "@mui/material";
-import { auth, createUserWithEmailAndPassword } from "../../config/firebase";
+// import { auth, createUserWithEmailAndPassword } from "../../config/firebase";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { register } = useAuth();
 
   const handleSignUp = async () => {
     if (email === "" || password === "" || confirmPassword === "") {
@@ -17,7 +19,7 @@ const SignUp = () => {
     }
     if (password === confirmPassword) {
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        await register(email, password);
       } catch (error) {
         console.log(error);
       }

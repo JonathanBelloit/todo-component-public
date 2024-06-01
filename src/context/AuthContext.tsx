@@ -1,10 +1,12 @@
 import { useState, useEffect, createContext } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { onAuthStateChanged, User, createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 
 interface AuthContextProps {
   user: User | null;
   loading: boolean;
+  register: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -21,8 +23,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     });
   }, []);
+  const register = async (email: string, password: string) => {
+    const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredentials.user;
+    await addDoc(collection(db, 'users'), {
+      email: user.email,
+      uid: user.uid,
+      createdAt: new Date(),
+    });
+  }
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, register }}>
       {children}
     </AuthContext.Provider>
   );

@@ -8,7 +8,7 @@ const styledInput = styled(TextField)({
   },
   '& .MuiInputBase-input': {
     padding: '0 1rem',
-    fontSize: '1.5rem',
+    fontSize: '1rem',
     fontWeight: 'bold',
     fontFamily: 'Arial',
     fontStyle: 'italic',
