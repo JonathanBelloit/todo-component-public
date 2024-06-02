@@ -1,11 +1,13 @@
 import { useState } from "react";
 import StyledInput from "../../styledComponents/TodoInput";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { auth, signInWithEmailAndPassword } from "../../config/firebase";
+import { FaEye } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
 
   const handleLogin = async () => {
     if (email === "" || password === "") {
@@ -26,13 +28,17 @@ const Login = () => {
         onChange={(e) => setEmail(e.target.value)}
         fullWidth
       />
-      <StyledInput
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        fullWidth
-        type="password"
-      />
+      <Box sx={{ position:'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <StyledInput
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          type={passwordHidden ? "password" : "text"}
+          sx={{ zIndex: 1 }}
+          />
+        <FaEye onClick={() => setPasswordHidden(!passwordHidden)} style={{ cursor: "pointer", position: 'absolute', right: 10, color: '#7493A2', zIndex: 2, fontSize: '1.5rem' }} />
+      </Box>
       <Button onClick={handleLogin} variant="contained" color="primary" sx={{ paddingX: 10 }}>
         submit
       </Button>

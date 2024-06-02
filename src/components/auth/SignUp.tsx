@@ -1,13 +1,15 @@
 import { useState } from "react";
 import StyledInput from "../../styledComponents/TodoInput";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 // import { auth, createUserWithEmailAndPassword } from "../../config/firebase";
+import { FaEye } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
   const { register } = useAuth();
 
   const handleSignUp = async () => {
@@ -34,20 +36,26 @@ const SignUp = () => {
         onChange={(e) => setEmail(e.target.value)}
         fullWidth
       />
-      <StyledInput
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        fullWidth
-        type="password"
-      />
-      <StyledInput
-        placeholder=" Retype Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        fullWidth
-        type="password"
-      />
+      <Box sx={{ position:'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <StyledInput
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          type={passwordHidden ? "password" : "text"}
+        />
+        <FaEye onClick={() => setPasswordHidden(!passwordHidden)} style={{ cursor: "pointer", position: 'absolute', right: 10, color: '#7493A2', zIndex: 2, fontSize: '1.5rem' }} />
+      </Box>
+      <Box sx={{ position:'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+        <StyledInput
+          placeholder=" Retype Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          fullWidth
+          type={passwordHidden ? "password" : "text"}
+        />
+        <FaEye onClick={() => setPasswordHidden(!passwordHidden)} style={{ cursor: "pointer", position: 'absolute', right: 10, color: '#7493A2', zIndex: 2, fontSize: '1.5rem' }} />
+      </Box>
       <Button onClick={handleSignUp} variant="contained" color="primary" sx={{ paddingX: 10 }}>
         submit
       </Button>
