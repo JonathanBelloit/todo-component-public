@@ -18,7 +18,8 @@ const NewTodo = ({
   const dispatch = useAppDispatch();
 
   const addNewTodo = () => {
-    dispatch(addTodo(todoInput));
+    const createdTimeStamp = new Date().toString();
+    dispatch(addTodo({...todoInput, createdAt: createdTimeStamp }));
     setTodoOpen(false);
     setTodoInput({
       title: "",
