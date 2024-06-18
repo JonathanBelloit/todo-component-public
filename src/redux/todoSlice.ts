@@ -45,8 +45,7 @@ export const updateTodo = createAsyncThunk(
     if (!userEmail) {
       throw new Error("You must be logged in to update a todo");
     }
-    const todoDocRef = doc(db, `users/${userEmail}/todos/`, todo.id);
-    // const docRef = doc(todosCollectionRef, todo.id);
+    const todoDocRef = doc(db, `users/${userEmail}/todos/${todo.id}`);
     await updateDoc(todoDocRef, { ...todo });
     return todo;
   }

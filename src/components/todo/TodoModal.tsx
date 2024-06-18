@@ -3,8 +3,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Todo } from './interface';
 import { FaWindowClose } from "react-icons/fa";
+import { Box, Button } from '@mui/material';
+import { useState } from 'react';
 
 const TodoModal = ({ todo, modalOpen, handleModalClose }: {todo: Todo, modalOpen: boolean, handleModalClose: () => void}) => {
+  const [editMode, setEditMode] = useState(false);
   if (!modalOpen) return <></>;
   const modalVariants = {
     hidden: {
@@ -76,6 +79,9 @@ const TodoModal = ({ todo, modalOpen, handleModalClose }: {todo: Todo, modalOpen
           <div>
             <p>{todo.description}</p>
           </div>
+          <Box>
+            <Button>Edit</Button>
+          </Box>
         </motion.div>
       </div>
     </AnimatePresence>
