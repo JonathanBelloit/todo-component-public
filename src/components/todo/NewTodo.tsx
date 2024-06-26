@@ -3,6 +3,7 @@ import { addTodo } from '../../redux/todoSlice'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TodoButton from './TodoButton';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const NewTodo = ({
   todoOpen,
@@ -108,6 +109,20 @@ const NewTodo = ({
                 setTodoInput({ ...todoInput, title: e.target.value })
               }
             />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <Box sx={{ width: '100%' }}>
+            <FormControl fullWidth>
+              <InputLabel variant="standard" htmlFor="standard-adornment-amount">
+                Urgency
+                <Select>
+                  <MenuItem>Urgent</MenuItem>
+                  <MenuItem>Current</MenuItem>
+                  <MenuItem>Back log</MenuItem>
+                </Select>
+              </InputLabel>
+            </FormControl>
+            </Box>
+            <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
             <label>Enter Todo Description:</label>
             <textarea
               value={todoInput.description}
@@ -117,6 +132,8 @@ const NewTodo = ({
               }
             />
             <TodoButton title="Add Todo" onClick={addNewTodo} />
+            </Box>
+            </Box>
           </motion.div>
         </div>
       )}
