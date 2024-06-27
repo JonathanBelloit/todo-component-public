@@ -3,14 +3,13 @@ import { useSelector } from "react-redux";
 import { getTodos, deleteTodo } from "../../redux/todoSlice";
 import { RootState } from "../../redux/store";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-//icons
-import { FaInfoCircle } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { Box, Typography } from "@mui/material";
 // local components
 import TodoButton from "./TodoButton";
 import NewTodo from "./NewTodo";
 import TodoModal from "./TodoModal";
 import { Todo } from './interface'
+import TodoListItem from "./TodoListItem";
 
 const TodoList = () => {
   const [newTodoOpen, setNewTodoOpen] = useState(false);
@@ -27,7 +26,7 @@ const TodoList = () => {
     dispatch(getTodos());
   }, [dispatch]);
 
-  const handleModalOpen = ({ todo }: { todo: Todo }) => {
+  const handleModalOpen = (todo: Todo) => {
     setTodoModal(todo);
     setModalOpen(true);
   };
@@ -37,6 +36,9 @@ const TodoList = () => {
     setModalOpen(false);
   };
 
+  const currentTodos = todos.filter((todo) => todo.urgency === "current");
+  const urgentTodos = todos.filter((todo) => todo.urgency === "urgent");
+  const backLogTodos = todos.filter((todo) => todo.urgency === "back log");
   const containerStyle = {
     maxWidth: "500px",
     padding: "1rem 2rem",
@@ -45,57 +47,86 @@ const TodoList = () => {
     borderBottomRightRadius: "30px",
   };
 
-  const todoItemStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "0 1rem",
-    marginBottom: "0.5rem",
-    borderRadius: "5px",
-    backgroundColor: "#fff",
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-    transition: "background-color 0.3s",
-    transform: "scale(1)",
-  };
-
-  const todoItemHoverStyle = {
-    backgroundColor: "#f1f1f1",
-    transform: "scale(1.05)",
-  };
-
   return (
     <div style={containerStyle}>
-      <div>
-        {todos.map((todo) => (
-          <div
-            key={todo.id}
-            style={todoItemStyle}
-            onMouseEnter={(e) => (
-              (e.currentTarget.style.backgroundColor =
-                todoItemHoverStyle.backgroundColor),
-              (e.currentTarget.style.transform = todoItemHoverStyle.transform)
-            )}
-            onMouseLeave={(e) => (
-              (e.currentTarget.style.backgroundColor =
-                todoItemStyle.backgroundColor),
-              (e.currentTarget.style.transform = todoItemStyle.transform)
-            )}
+      <Box>
+      <Box>
+          <Typography variant="h5" color="white">
+            Urgent:
+          </Typography>
+        </Box>
+        {urgentTodos.length === 0 ? (
+          <Typography 
+            variant="h5" 
+            color="white" 
+            textAlign={'center'}
+            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
+            >
+              You have no urgent todos
+          </Typography>
+        ) : (
+          urgentTodos.map((todo) => (
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              handleModalOpen={handleModalOpen}
+              handleDeleteTodo={handleDeleteTodo}
+            />
+          ))
+        )}
+      </Box>
+      <Box>
+        <Box>
+          <Typography variant="h5" color="white">
+            Current:
+          </Typography>
+        </Box>
+        {currentTodos.length === 0 ? (
+          <Typography 
+          variant="h5" 
+          color="white" 
+          textAlign={'center'}
+          sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
           >
-            <h2>{todo.title}</h2>
-            <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-              <FaInfoCircle
-                color="#DBC53A"
-                onClick={() => handleModalOpen({ todo })}
-              />
-              <MdDelete
-                color="#E06546"
-                fontSize="1.5em"
-                onClick={() => handleDeleteTodo(todo.id ?? "")}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+            You have no current todos
+          </Typography>
+        ) : (
+          currentTodos.map((todo) => (
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              handleModalOpen={handleModalOpen}
+              handleDeleteTodo={handleDeleteTodo}
+            />
+          ))
+        )}
+      </Box>
+      <Box>
+        <Box>
+          <Typography variant="h5" color="white">
+            Back Log:
+          </Typography>
+        </Box>
+        {backLogTodos.length === 0 ? (
+          <Typography 
+          variant="h5" 
+          color="white" 
+          textAlign={'center'}
+          sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
+          >
+            You have no back log todos
+          </Typography>
+        ) : (
+          backLogTodos.map((todo) => (
+            <TodoListItem
+              key={todo.id}
+              todo={todo}
+              handleModalOpen={handleModalOpen}
+              handleDeleteTodo={handleDeleteTodo}
+            />
+          ))
+        )}
+      </Box>
       {!newTodoOpen && (
         <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
       )}
