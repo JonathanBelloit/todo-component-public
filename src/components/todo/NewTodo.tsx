@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import TodoButton from './TodoButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material';
 
 const NewTodo = ({
   todoOpen,
@@ -15,6 +16,7 @@ const NewTodo = ({
   const [todoInput, setTodoInput] = useState({
     title: "",
     description: "",
+    urgency: "current",
   });
   const dispatch = useAppDispatch();
 
@@ -25,8 +27,13 @@ const NewTodo = ({
     setTodoInput({
       title: "",
       description: "",
+      urgency: "",
     });
   };
+
+  const handleChange = (e: SelectChangeEvent) => {
+    setTodoInput({ ...todoInput, urgency: e.target.value });
+  }
 
   const handleClose = () => {
     setTodoOpen(false);
@@ -114,10 +121,13 @@ const NewTodo = ({
             <FormControl fullWidth>
               <InputLabel variant="standard" htmlFor="standard-adornment-amount">
                 Urgency
-                <Select>
-                  <MenuItem>Urgent</MenuItem>
-                  <MenuItem>Current</MenuItem>
-                  <MenuItem>Back log</MenuItem>
+                <Select
+                  onChange={handleChange}
+                  value={todoInput.urgency}
+                >
+                  <MenuItem value={'urgent'}>Urgent</MenuItem>
+                  <MenuItem value={'current'}>Current</MenuItem>
+                  <MenuItem value={'back log'}>Back log</MenuItem>
                 </Select>
               </InputLabel>
             </FormControl>
@@ -141,4 +151,4 @@ const NewTodo = ({
   );
 };
 
-export default NewTodo
+export default NewTodo;
