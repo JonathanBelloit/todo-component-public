@@ -36,7 +36,8 @@ const todoItemStyle = {
   transition: "background-color 0.3s",
   transform: "scale(1)",
   "&:hover": {
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#76A39A",
+    color: 'white',
     transform: "scale(1.05)",
   }
 };
