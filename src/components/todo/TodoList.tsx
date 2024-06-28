@@ -36,9 +36,12 @@ const TodoList = () => {
     setModalOpen(false);
   };
 
-  const currentTodos = todos.filter((todo) => todo.urgency === "current");
-  const urgentTodos = todos.filter((todo) => todo.urgency === "urgent");
-  const backLogTodos = todos.filter((todo) => todo.urgency === "back log");
+  const categories = {
+    urgent: todos.filter((todo) => todo.urgency === "urgent"),
+    current: todos.filter((todo) => todo.urgency === "current"),
+    backLog: todos.filter((todo) => todo.urgency === "back log"),
+  };
+
   const containerStyle = {
     maxWidth: "500px",
     padding: "1rem 2rem",
@@ -49,84 +52,29 @@ const TodoList = () => {
 
   return (
     <div style={containerStyle}>
-      <Box>
-      <Box>
-          <Typography variant="h5" color="white">
-            Urgent:
-          </Typography>
-        </Box>
-        {urgentTodos.length === 0 ? (
-          <Typography 
-            variant="h5" 
-            color="white" 
-            textAlign={'center'}
-            sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
-            >
-              You have no urgent todos
-          </Typography>
-        ) : (
-          urgentTodos.map((todo) => (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              handleModalOpen={handleModalOpen}
-              handleDeleteTodo={handleDeleteTodo}
-            />
-          ))
-        )}
-      </Box>
-      <Box>
-        <Box>
-          <Typography variant="h5" color="white">
-            Current:
-          </Typography>
-        </Box>
-        {currentTodos.length === 0 ? (
-          <Typography 
-          variant="h5" 
-          color="white" 
-          textAlign={'center'}
-          sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
+      {["urgent", "current", "backLog"].map((category) => (
+        <Box key={category}>
+          <Typography
+            variant="h4"
+            color="white"
+            sx={{ fontWeight: "700", marginBottom: "1rem" }}
           >
-            You have no current todos
+            {category.charAt(0).toUpperCase() + category.slice(1)}
           </Typography>
-        ) : (
-          currentTodos.map((todo) => (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              handleModalOpen={handleModalOpen}
-              handleDeleteTodo={handleDeleteTodo}
-            />
-          ))
-        )}
-      </Box>
-      <Box>
-        <Box>
-          <Typography variant="h5" color="white">
-            Back Log:
-          </Typography>
+          {categories[category as keyof typeof categories].length === 0 ? (
+            <Typography color="white">You have no {category} todos</Typography>
+          ) : (
+            categories[category as keyof typeof categories].map((todo) => (
+              <TodoListItem
+                key={todo.id}
+                todo={todo}
+                handleModalOpen={handleModalOpen}
+                handleDeleteTodo={handleDeleteTodo}
+              />
+            ))
+          )}
         </Box>
-        {backLogTodos.length === 0 ? (
-          <Typography 
-          variant="h5" 
-          color="white" 
-          textAlign={'center'}
-          sx={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', padding: '1rem', borderRadius: '10px' }}
-          >
-            You have no back log todos
-          </Typography>
-        ) : (
-          backLogTodos.map((todo) => (
-            <TodoListItem
-              key={todo.id}
-              todo={todo}
-              handleModalOpen={handleModalOpen}
-              handleDeleteTodo={handleDeleteTodo}
-            />
-          ))
-        )}
-      </Box>
+      ))}
       {!newTodoOpen && (
         <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
       )}
