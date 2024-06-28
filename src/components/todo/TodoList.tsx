@@ -8,7 +8,7 @@ import { Box, Typography } from "@mui/material";
 import TodoButton from "./TodoButton";
 import NewTodo from "./NewTodo";
 import TodoModal from "./TodoModal";
-import { Todo } from './interface'
+import { Todo } from "./interface";
 import TodoListItem from "./TodoListItem";
 
 const TodoList = () => {
@@ -55,14 +55,25 @@ const TodoList = () => {
       {["urgent", "current", "backLog"].map((category) => (
         <Box key={category}>
           <Typography
-            variant="h4"
+            variant="h5"
             color="white"
-            sx={{ fontWeight: "700", marginBottom: "1rem" }}
+            sx={{ fontWeight: "500", my: "1rem" }}
           >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
+            {category.charAt(0).toUpperCase() + category.slice(1)}:
           </Typography>
           {categories[category as keyof typeof categories].length === 0 ? (
-            <Typography color="white">You have no {category} todos</Typography>
+            <Typography
+              variant="h5"
+              color="white"
+              textAlign={"center"}
+              sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                padding: "1rem",
+                borderRadius: "10px",
+              }}
+            >
+              You have no {category} todos
+            </Typography>
           ) : (
             categories[category as keyof typeof categories].map((todo) => (
               <TodoListItem
