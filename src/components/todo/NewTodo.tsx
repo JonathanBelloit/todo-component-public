@@ -118,19 +118,19 @@ const NewTodo = ({
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Box sx={{ width: '100%' }}>
-            <FormControl fullWidth>
-              <InputLabel variant="standard" htmlFor="standard-adornment-amount">
-                Urgency
-                <Select
-                  onChange={handleChange}
-                  value={todoInput.urgency}
-                >
-                  <MenuItem value={'urgent'}>Urgent</MenuItem>
-                  <MenuItem value={'current'}>Current</MenuItem>
-                  <MenuItem value={'back log'}>Back log</MenuItem>
-                </Select>
-              </InputLabel>
-            </FormControl>
+              <FormControl fullWidth>
+                <InputLabel variant="standard" htmlFor="standard-adornment-amount">
+                  Urgency
+                  <Select
+                    onChange={handleChange}
+                    value={todoInput.urgency}
+                  >
+                    <MenuItem value={'urgent'}>Urgent</MenuItem>
+                    <MenuItem value={'current'}>Current</MenuItem>
+                    <MenuItem value={'back log'}>Back log</MenuItem>
+                  </Select>
+                </InputLabel>
+              </FormControl>
             </Box>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
             <label>Enter Todo Description:</label>

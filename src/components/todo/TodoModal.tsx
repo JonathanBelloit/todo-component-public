@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { motion, AnimatePresence } from 'framer-motion';
 import { Todo } from './interface';
 import { FaWindowClose } from "react-icons/fa";
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { updateTodo } from '../../redux/todoSlice';
 
@@ -44,6 +44,17 @@ const TodoModal = ({
       setEditMode(false);
     }
   };
+
+  const handleChange = (e: SelectChangeEvent) => {
+    dispatch(
+      updateTodo({
+       ...todo,
+        urgency: e.target.value,
+        updatedAt: new Date().toString(),
+      })
+    );
+  }
+  
   const modalVariants = {
     hidden: {
       opacity: 0,
@@ -128,6 +139,19 @@ const TodoModal = ({
             />
           </div>
           <div>
+          <FormControl fullWidth>
+              <InputLabel variant="standard" htmlFor="standard-adornment-amount">
+                Urgency
+                <Select
+                  onChange={handleChange}
+                  value={todo.urgency}
+                >
+                  <MenuItem value={'urgent'}>Urgent</MenuItem>
+                  <MenuItem value={'current'}>Current</MenuItem>
+                  <MenuItem value={'back log'}>Back log</MenuItem>
+                </Select>
+              </InputLabel>
+            </FormControl>
             <p>
               {!editMode ? (
                 todo.description
