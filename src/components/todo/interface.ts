@@ -5,5 +5,6 @@ export interface Todo {
   completed?: boolean;
   createdAt?: string;
   updatedAt?: string;
+  project?: string;
   urgency: string;
 }

@@ -1,11 +1,22 @@
-import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 // import TodoButton from './TodoButton';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Todo } from './interface';
+import { motion, AnimatePresence } from "framer-motion";
+import { Todo } from "./interface";
 import { FaWindowClose } from "react-icons/fa";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { updateTodo } from '../../redux/todoSlice';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { updateTodo } from "../../redux/todoSlice";
 
 const TodoModal = ({
   todo,
@@ -21,13 +32,13 @@ const TodoModal = ({
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
   const [newDescription, setNewDescription] = useState(todo.description);
-  
+
   useEffect(() => {
     if (modalOpen) {
       setNewTitle(todo.title);
       setNewDescription(todo.description);
     }
-  }, [modalOpen])
+  }, [modalOpen]);
   if (!modalOpen) return <></>;
 
   const handleUpdateTodo = () => {
@@ -36,9 +47,9 @@ const TodoModal = ({
       dispatch(
         updateTodo({
           ...todo,
-            title: newTitle,
-            description: newDescription,
-            updatedAt: updateTimeStamp,
+          title: newTitle,
+          description: newDescription,
+          updatedAt: updateTimeStamp,
         })
       );
       setEditMode(false);
@@ -48,12 +59,12 @@ const TodoModal = ({
   const handleChange = (e: SelectChangeEvent) => {
     dispatch(
       updateTodo({
-       ...todo,
+        ...todo,
         urgency: e.target.value,
         updatedAt: new Date().toString(),
       })
     );
-  }
+  };
 
   const modalVariants = {
     hidden: {
@@ -101,7 +112,7 @@ const TodoModal = ({
             flexDirection: "column",
             border: "1px solid black",
             borderRadius: "5px",
-            maxWidth: "500px",
+            maxWidth: "650px",
             margin: "2rem auto",
             backgroundColor: "white",
             padding: "10px",
@@ -139,23 +150,36 @@ const TodoModal = ({
             />
           </div>
           <div>
-          <FormControl fullWidth sx={{ mb: 5 }}>
-              <InputLabel sx={{display: 'flex', gap: 2, alignItems: 'center'}} variant="standard" htmlFor="standard-adornment-amount">
-                <Typography variant='h4' color="black">
-                  Urgency: 
+            <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+              <Box sx={{ gap: 1, display: 'flex', flexGrow: 3 }}>
+                <Typography variant="h5" color="black">
+                  Project:
                 </Typography>
-                <Select
-                  onChange={handleChange}
-                  value={todo.urgency}
-                  sx={{pt: '0px'}}
+                <Typography variant="h5" color="black" fontStyle={'italic'}>
+                  {!todo.project ? 'No project assigned' : todo.project}
+                </Typography>
+              </Box>
+              <FormControl sx={{ mb: 5, width: 200 }}>
+                <InputLabel
+                  sx={{ display: "flex", gap: 2, alignItems: "center" }}
+                  variant="standard"
+                  htmlFor="standard-adornment-amount"
                 >
-                  <MenuItem value={'urgent'}>Urgent</MenuItem>
-                  <MenuItem value={'current'}>Current</MenuItem>
-                  <MenuItem value={'back log'}>Back log</MenuItem>
-                </Select>
-              </InputLabel>
-            </FormControl>
-            <p>
+                  <Typography variant="h4" color="black">
+                    Urgency:
+                  </Typography>
+                  <Select
+                    onChange={handleChange}
+                    value={todo.urgency}
+                  >
+                    <MenuItem value={"urgent"}>Urgent</MenuItem>
+                    <MenuItem value={"current"}>Current</MenuItem>
+                    <MenuItem value={"back log"}>Back log</MenuItem>
+                  </Select>
+                </InputLabel>
+              </FormControl>
+            </Box>
+            <Box sx={{ my: 2, border: '1px solid black', p: 1 }}>
               {!editMode ? (
                 todo.description
               ) : (
@@ -168,7 +192,7 @@ const TodoModal = ({
                   onChange={(e) => setNewDescription(e.target.value)}
                 />
               )}
-            </p>
+            </Box>
           </div>
           <Box>
             <Button
@@ -185,7 +209,7 @@ const TodoModal = ({
   );
 };
 
-export default TodoModal
+export default TodoModal;
 
 // 43 out of 75
 // 18 out of 46
