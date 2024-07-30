@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { motion, AnimatePresence } from 'framer-motion';
 import { Todo } from './interface';
 import { FaWindowClose } from "react-icons/fa";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { updateTodo } from '../../redux/todoSlice';
 
@@ -54,7 +54,7 @@ const TodoModal = ({
       })
     );
   }
-  
+
   const modalVariants = {
     hidden: {
       opacity: 0,
@@ -139,12 +139,15 @@ const TodoModal = ({
             />
           </div>
           <div>
-          <FormControl fullWidth>
-              <InputLabel variant="standard" htmlFor="standard-adornment-amount">
-                Urgency
+          <FormControl fullWidth sx={{ mb: 5 }}>
+              <InputLabel sx={{display: 'flex', gap: 2, alignItems: 'center'}} variant="standard" htmlFor="standard-adornment-amount">
+                <Typography variant='h4' color="black">
+                  Urgency: 
+                </Typography>
                 <Select
                   onChange={handleChange}
                   value={todo.urgency}
+                  sx={{pt: '0px'}}
                 >
                   <MenuItem value={'urgent'}>Urgent</MenuItem>
                   <MenuItem value={'current'}>Current</MenuItem>
@@ -183,3 +186,7 @@ const TodoModal = ({
 };
 
 export default TodoModal
+
+// 43 out of 75
+// 18 out of 46
+// 61 out of 121

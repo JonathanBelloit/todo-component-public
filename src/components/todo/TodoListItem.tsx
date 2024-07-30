@@ -6,7 +6,7 @@ import { MdDelete } from 'react-icons/md'
 
 const TodoListItem = ({ todo, handleModalOpen, handleDeleteTodo }: { todo: Todo, handleModalOpen: (todo: Todo) => void, handleDeleteTodo: (id: string) => void }) => {
   return (
-    <Box sx={todoItemStyle}>
+    <Box sx={todoItemStyle} >
       <Typography variant="h5" sx={{ fontWeight: '700' }}>{todo.title}</Typography>
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <FaInfoCircle
