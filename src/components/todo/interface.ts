@@ -8,3 +8,8 @@ export interface Todo {
   project?: string;
   urgency: string;
 }
+
+export interface Project {
+  id?: string;
+  title: string;
+}
