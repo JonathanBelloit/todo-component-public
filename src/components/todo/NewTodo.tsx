@@ -22,7 +22,7 @@ const NewTodo = ({
 
   const addNewTodo = () => {
     const createdTimeStamp = new Date().toString();
-    dispatch(addTodo({...todoInput, createdAt: createdTimeStamp }));
+    dispatch(addTodo({...todoInput, createdAt: createdTimeStamp, completed: false }));
     setTodoOpen(false);
     setTodoInput({
       title: "",
