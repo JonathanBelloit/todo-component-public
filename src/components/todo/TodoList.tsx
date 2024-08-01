@@ -126,7 +126,7 @@ const TodoList = () => {
         <TodoButton centered={false} title= {showCompleted ? "Hide Completed" : "Show Completed"} onClick={() => setShowCompleted(!showCompleted)} />
       </Box>
       {!newTodoOpen && (
-        <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
+        <TodoButton title="Add Todo" large onClick={() => setNewTodoOpen(true)} />
       )}
       <NewTodo todoOpen={newTodoOpen} setTodoOpen={setNewTodoOpen} />
       <TodoModal

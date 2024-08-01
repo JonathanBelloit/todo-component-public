@@ -8,8 +8,8 @@ const buttonBaseStyle = {
   backgroundColor: "#25597A",
   fontSize: "1rem",
   transition: "background-color 0.3s",
-  color: 'white',
-  fontStyle: 'italic',
+  color: "white",
+  fontStyle: "italic",
   transform: "scale(1)",
 };
 
@@ -22,19 +22,32 @@ const TodoButton = ({
   onClick,
   title,
   centered = true,
+  large = false,
 }: {
   onClick: () => void;
   title: string;
   centered?: boolean;
+  large?: boolean;
 }) => {
-  const buttonStyle = { ...buttonBaseStyle, ...(centered ? { margin: '1rem auto' } : {margin: '1rem 0'}) };
+  const buttonStyle = {
+    ...buttonBaseStyle,
+    ...(centered ? { margin: "1rem auto" } : { margin: "1rem 0" }),
+    ...(large ? { fontSize: "1.5rem", padding: "1rem 2.5rem", borderRadius: 30 } : {}),
+  };
   return (
-    <button 
-      style={buttonStyle} 
+    <button
+      style={buttonStyle}
       onClick={onClick}
-      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor, e.currentTarget.style.transform = buttonHoverStyle.transform)}
-      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor, e.currentTarget.style.transform = buttonStyle.transform)}
-      >
+      onMouseEnter={(e) => (
+        (e.currentTarget.style.backgroundColor =
+          buttonHoverStyle.backgroundColor),
+        (e.currentTarget.style.transform = buttonHoverStyle.transform)
+      )}
+      onMouseLeave={(e) => (
+        (e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor),
+        (e.currentTarget.style.transform = buttonStyle.transform)
+      )}
+    >
       {title}
     </button>
   );
