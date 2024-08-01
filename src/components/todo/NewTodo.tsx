@@ -5,6 +5,11 @@ import TodoButton from './TodoButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import dayjs from 'dayjs';
+
 
 const NewTodo = ({
   todoOpen,
@@ -131,6 +136,12 @@ const NewTodo = ({
                   </Select>
                 </InputLabel>
               </FormControl>
+            </Box>
+            <Box>
+              <label>Due Date:</label>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker />
+              </LocalizationProvider>
             </Box>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
             <label>Enter Todo Description:</label>
