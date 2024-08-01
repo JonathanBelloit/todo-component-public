@@ -15,6 +15,7 @@ const TodoList = () => {
   const [newTodoOpen, setNewTodoOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [todoModal, setTodoModal] = useState<Todo>({} as Todo);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const handleDeleteTodo = (id: string) => {
     dispatch(deleteTodo(id));
@@ -40,6 +41,7 @@ const TodoList = () => {
     urgent: todos.filter((todo) => todo.urgency === "urgent"),
     current: todos.filter((todo) => todo.urgency === "current"),
     backLog: todos.filter((todo) => todo.urgency === "back log"),
+    completed: todos.filter((todo) => todo.urgency === "completed"),
   };
 
   const containerStyle = {
@@ -86,6 +88,43 @@ const TodoList = () => {
           )}
         </Box>
       ))}
+      {showCompleted && (
+        <Box>
+          <Typography
+            variant="h5"
+            color="white"
+            sx={{ fontWeight: "500", my: "1rem" }}
+          >
+            Completed:
+          </Typography>
+          {categories.completed.length === 0 ? (
+            <Typography
+              variant="h5"
+              color="white"
+              textAlign={"center"}
+              sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                padding: "1rem",
+                borderRadius: "10px",
+              }}
+            >
+              You have no completed todos
+            </Typography>
+          ) : (
+            categories.completed.map((todo) => (
+              <TodoListItem
+                key={todo.id}
+                todo={todo}
+                handleModalOpen={handleModalOpen}
+                handleDeleteTodo={handleDeleteTodo}
+              />
+            ))
+          )}
+        </Box>
+      )}
+      <Box>
+        <TodoButton title= {showCompleted ? "Hide Completed" : "Show Completed"} onClick={() => setShowCompleted(!showCompleted)} />
+      </Box>
       {!newTodoOpen && (
         <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
       )}

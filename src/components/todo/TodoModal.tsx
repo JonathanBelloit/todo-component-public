@@ -174,6 +174,7 @@ const TodoModal = ({
                       <MenuItem value={"urgent"}>Urgent</MenuItem>
                       <MenuItem value={"current"}>Current</MenuItem>
                       <MenuItem value={"back log"}>Back log</MenuItem>
+                      <MenuItem value={"completed"}>Completed</MenuItem>
                     </Select>
                   </InputLabel>
                 </FormControl>
