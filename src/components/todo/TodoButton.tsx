@@ -1,9 +1,9 @@
-const buttonStyle = {
+const buttonBaseStyle = {
   borderRadius: 15,
   cursor: "pointer",
   display: "block",
   border: "none",
-  margin: '1rem auto',
+  // margin: '1rem auto',
   padding: "0.5rem 1rem",
   backgroundColor: "#25597A",
   fontSize: "1rem",
@@ -21,10 +21,13 @@ const buttonHoverStyle = {
 const TodoButton = ({
   onClick,
   title,
+  centered = true,
 }: {
   onClick: () => void;
   title: string;
+  centered?: boolean;
 }) => {
+  const buttonStyle = { ...buttonBaseStyle, ...(centered ? { margin: '1rem auto' } : {margin: '1rem 0'}) };
   return (
     <button 
       style={buttonStyle} 

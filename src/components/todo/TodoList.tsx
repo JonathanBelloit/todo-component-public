@@ -122,8 +122,8 @@ const TodoList = () => {
           )}
         </Box>
       )}
-      <Box>
-        <TodoButton title= {showCompleted ? "Hide Completed" : "Show Completed"} onClick={() => setShowCompleted(!showCompleted)} />
+      <Box sx={{ ml: 0 }}>
+        <TodoButton centered={false} title= {showCompleted ? "Hide Completed" : "Show Completed"} onClick={() => setShowCompleted(!showCompleted)} />
       </Box>
       {!newTodoOpen && (
         <TodoButton title="Add Todo" onClick={() => setNewTodoOpen(true)} />
