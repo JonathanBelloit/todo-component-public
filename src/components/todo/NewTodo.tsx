@@ -6,9 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
 
 
 const NewTodo = ({
@@ -23,6 +21,8 @@ const NewTodo = ({
     description: "",
     urgency: "current",
   });
+  const today = new Date();
+  const [todoDate, setTodoDate] = useState<Dayjs | null>(dayjs(today));
   const dispatch = useAppDispatch();
 
   const addNewTodo = () => {
@@ -137,11 +137,13 @@ const NewTodo = ({
                 </InputLabel>
               </FormControl>
             </Box>
-            <Box>
-              <label>Due Date:</label>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker />
-              </LocalizationProvider>
+            <Box sx={{ display: 'flex', flexDirection: 'column', mx: 5, gap: 1}}>
+              {/* <label>Due Date:</label> */}
+              <DatePicker 
+                label="Due Date"
+                value={todoDate}
+                onChange={(newValue) => setTodoDate(newValue)}
+              />
             </Box>
             <Box sx={{ display: 'flex', width: '100%', flexDirection: 'column' }}>
             <label>Enter Todo Description:</label>
