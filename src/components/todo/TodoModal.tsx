@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
-import { updateTodo } from "../../redux/todoSlice";
+import { updateTodo, addTodoToCalendar } from "../../redux/todoSlice";
 import dayjs, { Dayjs } from "dayjs";
 import { formatDayJs } from "../../utils/dateUtils";
 
@@ -56,6 +56,11 @@ const TodoModal = ({
       );
       setEditMode(false);
     }
+  };
+
+  const handleAddToCalendar = () => {
+    dispatch(addTodoToCalendar(todo));
+    handleModalClose();
   };
 
   const handleChange = (e: SelectChangeEvent) => {
@@ -223,6 +228,11 @@ const TodoModal = ({
                 }
               >
                 {!editMode ? "Edit" : "Save"}
+              </Button>
+              <Button
+                onClick={handleAddToCalendar}
+              >
+                Add to Calendar
               </Button>
             </Box>
           </motion.div>

@@ -61,6 +61,25 @@ export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (id: string
   return id;
 });
 
+export const addTodoToCalendar = createAsyncThunk(
+  "todos/addTodoToCalendar",
+  async (todo: Todo) => {
+    const userEmail = getCurrentUserEmail();
+    if (!userEmail) {
+      throw new Error("You must be logged in to add a todo to calendar");
+    }
+    const calendarCollectionRef = collection(db, `users/${userEmail}/calendarEvents/`);
+    const docRef = await addDoc(calendarCollectionRef, { 
+      title: todo.title,
+      description: todo.description,
+      user: userEmail,
+      time: '9:00 AM',
+      date: new Date(),
+     });
+    return {...todo, id: docRef.id};
+  }
+);
+
 const todoSlice = createSlice({
   name: "todos",
   initialState: {
@@ -123,7 +142,19 @@ const todoSlice = createSlice({
       .addCase(deleteTodo.rejected, (state, action) => {
         state.loading = 'failed';
         state.error = action.error.message || 'Failed to delete todo';
-      });
+      })
+      .addCase(addTodoToCalendar.pending, (state) => {
+        state.loading = 'pending';
+        state.error = null;
+      })
+      .addCase(addTodoToCalendar.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.todos.push(action.payload);
+      })
+      .addCase(addTodoToCalendar.rejected, (state, action) => {
+        state.loading = 'failed';
+        state.error = action.error.message || 'Failed to add todo to calendar';
+      })
   },
 });
 
