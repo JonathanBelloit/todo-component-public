@@ -7,6 +7,7 @@ export interface Todo {
   updatedAt?: string;
   project?: string;
   urgency: string;
+  duedate?: string;
 }
 
 export interface Project {

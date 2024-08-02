@@ -21,6 +21,7 @@ const NewTodo = ({
     title: "",
     description: "",
     urgency: "current",
+    duedate: "",
   });
   const today = new Date();
   const [todoDate, setTodoDate] = useState<Dayjs | null>(dayjs(today));
@@ -28,12 +29,13 @@ const NewTodo = ({
 
   const addNewTodo = () => {
     const createdTimeStamp = new Date().toString();
-    dispatch(addTodo({...todoInput, createdAt: createdTimeStamp, completed: false }));
+    dispatch(addTodo({...todoInput, createdAt: createdTimeStamp, completed: false, duedate: formatDayJs(todoDate) }));
     setTodoOpen(false);
     setTodoInput({
       title: "",
       description: "",
       urgency: "",
+      duedate: "",
     });
   };
 
