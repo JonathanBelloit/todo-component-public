@@ -13,8 +13,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 import { updateTodo } from "../../redux/todoSlice";
+import dayjs, { Dayjs } from "dayjs";
+import { formatDayJs } from "../../utils/dateUtils";
 
 const TodoModal = ({
   todo,
@@ -30,6 +33,7 @@ const TodoModal = ({
   const [editMode, setEditMode] = useState(false);
   const [newTitle, setNewTitle] = useState(todo.title);
   const [newDescription, setNewDescription] = useState(todo.description);
+  const [newTodoDate, setNewTodoDate] = useState<Dayjs | null>(dayjs(todo.duedate));
 
   useEffect(() => {
     if (modalOpen) {
@@ -47,6 +51,7 @@ const TodoModal = ({
           title: newTitle,
           description: newDescription,
           updatedAt: updateTimeStamp,
+          duedate: newTodoDate ? formatDayJs(newTodoDate) : todo.duedate,
         })
       );
       setEditMode(false);
@@ -178,6 +183,23 @@ const TodoModal = ({
                     </Select>
                   </InputLabel>
                 </FormControl>
+              </Box>
+              <Box>
+                <Typography variant="h5" color="black">
+                  Due date:
+                </Typography>
+                { !editMode ? (
+                  <Typography variant="h5" color="black" fontStyle={'italic'}>
+                    {todo.duedate ? todo.duedate : 'No due date'}
+                  </Typography>
+                ) : (
+                  <DatePicker
+                    label="Due date"
+                    value={dayjs(todo.duedate)}
+                    onChange={(value) => setNewTodoDate(value)}
+                    />
+                )
+                }
               </Box>
               <Box sx={{ my: 2, border: '1px solid black', p: 1 }}>
                 {!editMode ? (
